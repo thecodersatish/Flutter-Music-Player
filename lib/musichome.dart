@@ -8,6 +8,7 @@ import 'package:satish_play_music/pages/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:satish_play_music/database/database_client.dart';
 import 'package:satish_play_music/views/album.dart';
+import 'package:satish_play_music/views/nowPlaying.dart';
 import 'package:satish_play_music/views/songs.dart';
 import 'package:satish_play_music/views/artists.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -96,6 +97,10 @@ class _musicState extends State<MusicHome>with SingleTickerProviderStateMixin<Mu
       isLoading = false;
     });
     listensavings();
+    AssetsAudioPlayer.setupNotificationsOpenAction((notification) {
+      Navigator.push(context, MaterialPageRoute(builder: (_)=>NowPlaying(db)));
+      return true;
+    });
   }
 
 
@@ -185,7 +190,7 @@ class _musicState extends State<MusicHome>with SingleTickerProviderStateMixin<Mu
       key: _scaffoldKey,
       drawer: Drawer(
         child: Container(
-          color: DynamicTheme.of(context).brightness==Brightness.dark?Colors.black87:Colors.white,
+          color: DynamicTheme.of(context).brightness==Brightness.dark?Colors.black:Colors.white,
           child: Column(
             children: [
               UserAccountsDrawerHeader(
@@ -265,8 +270,13 @@ class _musicState extends State<MusicHome>with SingleTickerProviderStateMixin<Mu
   }
 
   Future<bool> _onwillpop()async{
-    MoveToBackground.moveTaskToBack();
-    return false;
+    if(_tabController.index!=0) {
+      _tabController.animateTo(0);
+    }
+    else {
+      MoveToBackground.moveTaskToBack();
+      return false;
+    }
   }
 
   launchUrl(url) async {

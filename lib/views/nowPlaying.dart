@@ -75,14 +75,13 @@ class _NowPlayingState extends State<NowPlaying> {
                       }else if(choice == Constants.Artist){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>CardDetail(1,widget.db,playing.audio.audio)));
                       }else if(choice == Constants.Favourite){
-                        UpdateFavourites(_assetsAudioPlayer.current.value.audio.audio.metas.id);
+                        UpdateFavourites(_assetsAudioPlayer.current.valueWrapper.value.audio.audio.metas.id);
                       }
                       else if(choice == Constants.RingTone){
                         try {
                           final String temp = await platform.invokeMethod(
                               'setringtone', {
-                            "arg": _assetsAudioPlayer.current.value.audio
-                                .audio.path
+                            "arg": _assetsAudioPlayer.current.valueWrapper.value.audio.audio.path
                           });
                           print(temp);
                         }on PlatformException catch (e) {
@@ -91,8 +90,8 @@ class _NowPlayingState extends State<NowPlaying> {
                       }else if(choice == Constants.Share){
                         await FlutterShare.shareFile(
                           title: "Share Music File",
-                          text: _assetsAudioPlayer.current.value.audio.audio.metas.title,
-                          filePath: _assetsAudioPlayer.current.value.audio.audio.metas.extra["filePath"],
+                          text: _assetsAudioPlayer.current.valueWrapper.value.audio.audio.metas.title,
+                          filePath: _assetsAudioPlayer.current.valueWrapper.value.audio.audio.metas.extra["filePath"],
                         );
                       }
                       else if(choice == Constants.Details){
@@ -103,10 +102,10 @@ class _NowPlayingState extends State<NowPlaying> {
                                 backgroundColor: Theme.of(context).accentColor,
                                 title: Text("Music Details"),
                                 children: [
-                                  Text("Filepath:  "+_assetsAudioPlayer.current.value.audio.audio.metas.extra["filePath"]),
-                                  Text("Title:     "+_assetsAudioPlayer.current.value.audio.audio.metas.title),
-                                  Text("Album:     "+_assetsAudioPlayer.current.value.audio.audio.metas.album),
-                                  Text("Artist:    "+_assetsAudioPlayer.current.value.audio.audio.metas.artist),
+                                  Text("Filepath:  "+_assetsAudioPlayer.current.valueWrapper.value.audio.audio.metas.extra["filePath"]),
+                                  Text("Title:     "+_assetsAudioPlayer.current.valueWrapper.value.audio.audio.metas.title),
+                                  Text("Album:     "+_assetsAudioPlayer.current.valueWrapper.value.audio.audio.metas.album),
+                                  Text("Artist:    "+_assetsAudioPlayer.current.valueWrapper.value.audio.audio.metas.artist),
                                 ],
                               );
                             });
@@ -118,7 +117,7 @@ class _NowPlayingState extends State<NowPlaying> {
                     itemBuilder: (BuildContext context){
                       return Constants.choices.map((String choice){
                         if(choice=="favourites") {
-                          if(favourites.contains(_assetsAudioPlayer.current.value.audio.audio.metas.id)){
+                          if(favourites.contains(_assetsAudioPlayer.current.valueWrapper.value.audio.audio.metas.id)){
                             return PopupMenuItem<String>(
                               value: choice,
                               child: Text("Remove Favourites"),
@@ -364,7 +363,7 @@ class PlayingControls extends StatelessWidget {
             icon: Icon(
               Icons.shuffle,
               size: 32,
-              color: _assetsAudioPlayer.isShuffling.value?DynamicTheme.of(context).brightness!=Brightness.dark?Colors.black87:Colors.white:Colors.grey,
+              color: _assetsAudioPlayer.isShuffling.valueWrapper.value?DynamicTheme.of(context).brightness!=Brightness.dark?Colors.black87:Colors.white:Colors.grey,
             ),
           );
         },

@@ -93,7 +93,7 @@ class _listSong extends State<ListSongs> {
               "To add songs to favourite, press on Like Icon right on songs tab."),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
+            new TextButton(
               child: new Text("Got it"),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -153,8 +153,8 @@ class _listSong extends State<ListSongs> {
                       player: _assetsAudioPlayer,
                       builder: (context, isPlaying) {
                         if(isPlaying != null){
-                          if(_assetsAudioPlayer.current.value.audio.audio.metas.id==songs[i].metas.id){
-                            if(_assetsAudioPlayer.isPlaying.value)
+                          if(_assetsAudioPlayer.current.valueWrapper.value.audio.audio.metas.id==songs[i].metas.id){
+                            if(_assetsAudioPlayer.isPlaying.valueWrapper.value)
                             return Image.asset("assets/images/playing.gif",height: 40,width: 40,);
                             else
                             return Image.asset("assets/images/pausing.gif",height: 40,width: 40,);
@@ -185,8 +185,8 @@ class _listSong extends State<ListSongs> {
                   onLongPress: () {
                     if (widget.mode == 3) {
                       showDialog(
-                        context: context,
-                        child: new AlertDialog(
+                        context: context, builder: (BuildContext context) {
+                        return AlertDialog(
                           title: new Text(
                               'Are you sure want remove this from favourites?'),
                           content: new Text(songs[i].metas.title),
@@ -198,8 +198,8 @@ class _listSong extends State<ListSongs> {
                                 'No',
                               ),
                             ),
-                            new FlatButton(
-                              onPressed: () async{
+                            new TextButton(
+                              onPressed: () async {
                                 UpdateFavourites(songs[i].metas.id);
                                 setState(() {
                                   songs.removeAt(i);
@@ -209,7 +209,8 @@ class _listSong extends State<ListSongs> {
                               child: new Text('Yes'),
                             ),
                           ],
-                        ),
+                        );
+                      }
                       );
                     }
                   },

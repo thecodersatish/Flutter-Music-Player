@@ -95,10 +95,13 @@ class _settingState extends State<Settings> {
                                 final theme=preferences.getInt("theme",defaultValue: 1);
                                 DynamicTheme.of(context).setBrightness(
                                     Brightness.dark);
-                                DynamicTheme.of(context).setThemeData(ThemeData(
-                                  scaffoldBackgroundColor: Colors.black,
+                                DynamicTheme.of(context).setThemeData(new ThemeData(
+                                  primarySwatch: Colors.grey,
                                   primaryColor: Colors.black,
+                                  brightness: Brightness.dark,
+                                  scaffoldBackgroundColor: Colors.black,
                                   accentColor: Colors.white,
+                                  accentIconTheme: IconThemeData(color: Colors.black),
                                   dividerColor: Colors.white12,
                                 ),);
                                 theme.setValue(1);

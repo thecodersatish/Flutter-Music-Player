@@ -64,9 +64,9 @@ Column _buildBottomNavigationMenu(var context, List<Audio> songs){
         leading: Text('Play Next',style: new TextStyle(fontSize: 17.0,color:Theme.of(context).accentColor)),
         onTap: ()async{
           AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer.withId("music");
-          if(_assetsAudioPlayer.isPlaying.value){
+          if(_assetsAudioPlayer.isPlaying.valueWrapper.value){
             for(int i=0;i<songs.length;i++){
-              _assetsAudioPlayer.playlist.insert(_assetsAudioPlayer.current.value.index+i+1, songs[i]);
+              _assetsAudioPlayer.playlist.insert(_assetsAudioPlayer.current.valueWrapper.value.index+i+1, songs[i]);
             }
             updateplayinglist();
           }
@@ -80,7 +80,7 @@ Column _buildBottomNavigationMenu(var context, List<Audio> songs){
         leading: Text('Add to Queue',style: new TextStyle(fontSize: 17.0,color:Theme.of(context).accentColor)),
         onTap: () async{
           AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer.withId("music");
-          if(_assetsAudioPlayer.isPlaying.value){
+          if(_assetsAudioPlayer.isPlaying.valueWrapper.value){
             for(int i=0;i<songs.length;i++){
               _assetsAudioPlayer.playlist.insert(_assetsAudioPlayer.playlist.numberOfItems, songs[i]);
             }
@@ -212,8 +212,8 @@ Column _buildsongBottomNavigationMenu(var context, Audio song) {
         leading: Text('Play Next',style: new TextStyle(fontSize: 17.0,color:Theme.of(context).accentColor)),
         onTap: ()async{
           AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer.withId("music");
-          if(_assetsAudioPlayer.isPlaying.value){
-              _assetsAudioPlayer.playlist.insert(_assetsAudioPlayer.current.value.index+1, song);
+          if(_assetsAudioPlayer.isPlaying.valueWrapper.value){
+              _assetsAudioPlayer.playlist.insert(_assetsAudioPlayer.current.valueWrapper.value.index+1, song);
             updateplayinglist();
           }
           else{
@@ -226,7 +226,7 @@ Column _buildsongBottomNavigationMenu(var context, Audio song) {
         leading: Text('Add to Queue',style: new TextStyle(fontSize: 17.0,color:Theme.of(context).accentColor)),
         onTap: () async{
           AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer.withId("music");
-          if(_assetsAudioPlayer.isPlaying.value){
+          if(_assetsAudioPlayer.isPlaying.valueWrapper.value){
               _assetsAudioPlayer.playlist.insert(_assetsAudioPlayer.playlist.numberOfItems, song);
             updateplayinglist();
           }
